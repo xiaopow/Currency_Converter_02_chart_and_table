@@ -71,7 +71,7 @@ class Currencies extends React.Component {
   }
 
   getConvertedCurrency(baseAmount,convertToCurrency,rates) {
-    return Number.parseFloat(baseAmount * rates[convertToCurrency]).toFixed(6);
+    return Number.parseFloat(baseAmount * rates[convertToCurrency]).toFixed(4);
   }
 
   getPastRates(e) {
@@ -91,7 +91,7 @@ class Currencies extends React.Component {
 
     // Exchange Table
     const tableRows = Object.keys(rates).map(function(key) {
-      const convertedRate = (Number.parseFloat(rates[key]) * baseAmount).toFixed(6);
+      const convertedRate = (Number.parseFloat(rates[key]) * baseAmount).toFixed(4);
       const countryCode = key;
 
       return(
@@ -138,7 +138,6 @@ class Currencies extends React.Component {
           <hr />
 
             <div className="col-sm-7">
-              <div className="text-center">
                 <div>
                    <CurrencyChart
                      pastDates={pastDates}
@@ -147,7 +146,6 @@ class Currencies extends React.Component {
                      compareCurrency={convertToCurrency}
                   />
                  </div>
-              </div>
             </div>
 
             <div className="col-sm-12 mx-auto pt-5">

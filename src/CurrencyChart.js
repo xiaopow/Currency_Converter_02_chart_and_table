@@ -8,6 +8,7 @@ const CurrencyChart = (props) => {
     const ctx = document.getElementById("myChart");
     new Chart(ctx, {
       type: "line",
+      // responsive: true,
       data: {
         labels: props.pastDates,
         datasets: [
@@ -21,15 +22,23 @@ const CurrencyChart = (props) => {
             lineTension: 0
           }
         ]
-       }
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+      }
     });
   });
 
   return (
-     <div className="container-fluid mx-auto">
-       <canvas id="myChart"  width="320" height="220"/>
-     </div>
+    <div className="container-fluid chart-container">
+     <canvas id="myChart"/>
+    </div>
   );
 }
 
 export default CurrencyChart
+// options = {
+//   responsive: true,
+//   maintainAspectRatio: false
+// };
