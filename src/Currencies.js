@@ -1,6 +1,6 @@
 import React from 'react';
+import Chart from "chart.js";
 import './App.css';
-import CurrencyChart from './CurrencyChart'
 
 class Currencies extends React.Component {
   constructor() {
@@ -37,10 +37,35 @@ class Currencies extends React.Component {
       fetch(apiHistoric)
        .then(results => {
           return results.json();
-      }).then(data => this.setState({
-        historicData: Object.values(data['rates']),
-        pastDates: Object.keys(data['rates']),
-      }));
+      }).then(data => {
+        this.setState({
+          historicData: Object.values(data['rates']),
+          pastDates: Object.keys(data['rates']),
+        });
+        const ctx = document.getElementById("myChart");
+        new Chart(ctx, {
+          type: "line",
+          // responsive: true,
+          data: {
+            labels: Object.keys(data['rates']),
+            datasets: [
+              {
+                label: `Rates Last 30 Days: ${baseCurrency}/${convertToCurrency}`,
+                data: this.getPastRates(Object.values(data['rates'])),
+                backgroundColor: "rgba(255, 99, 132, 0.2)",
+                borderColor: "rgba(255, 99, 132, 1)",
+                borderWidth: 2,
+                fill: false,
+                lineTension: 0
+              }
+            ]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+          }
+        });
+      });
   }
 
   callAPI(base) {
@@ -138,14 +163,9 @@ class Currencies extends React.Component {
           <hr />
 
             <div className="col-sm-7">
-                <div>
-                   <CurrencyChart
-                     pastDates={pastDates}
-                     historicRates={historicRates}
-                     baseCurrency={baseCurrency}
-                     compareCurrency={convertToCurrency}
-                  />
-                 </div>
+              <div className="container-fluid chart-container">
+                <canvas id="myChart"/>
+              </div>
             </div>
 
             <div className="col-sm-12 mx-auto pt-5">

@@ -4,6 +4,7 @@ import './index.css'
 
 
 const CurrencyChart = (props) => {
+  console.log(props);
   useEffect(() => {
     const ctx = document.getElementById("myChart");
     new Chart(ctx, {
@@ -25,10 +26,10 @@ const CurrencyChart = (props) => {
       },
       options: {
         responsive: true,
-        maintainAspectRatio: false,
+        // maintainAspectRatio: false,
       }
     });
-  });
+  }, []);
 
   return (
     <div className="container-fluid chart-container">
